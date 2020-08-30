@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
-<body>
+<body style="background-color: lightpink;">
     <div class="container-fluid">
         <!-- row 1 -->
         <header class="row">
@@ -29,9 +29,20 @@
             </div>
             <!-- column 2 row 2 -->
             <div class="col-8">
-                <section>CHECK</section>
+                <section id="current-weather">
+                    <div>
+                        <h2 id="city-date"></h2>
+                        <div id="icon"></div>
+                    </div>
+                    <div>
+                        <div id="temp"></div>
+                        <div id="humidity"></div>
+                        <div id="wind"></div>
+                        <div id="uv"></div>
+                    </div>
+                </section>
                 <!-- column 2 sub-row -->
-                <h2>Sub Row</h2>
+                <h2>Five Day Forecast</h2>
                 <div class="row">
                     <div class="col-12 article-container">
                         <article>test</article>
