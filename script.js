@@ -1,5 +1,12 @@
 // api key 242726fc7e61ebfc759b17352fed0b73
+var searchHistory = [];
 
+
+    // initialize
+
+    // set item to local storage
+
+    // render buttons from local storage
 
 // on click for search
 $('#searchBtn').on('click', function(event) {
@@ -12,12 +19,15 @@ $('#searchBtn').on('click', function(event) {
     var fiveDayQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + search + "&appid=242726fc7e61ebfc759b17352fed0b73"
     console.log(search);
     console.log(queryURL);
+
+
     
     // ajax query
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function(response) {
+        searchHistory.push(search);
         console.log(response);
         // city name
         var city = response.name;
@@ -46,6 +56,19 @@ $('#searchBtn').on('click', function(event) {
         // wind speed
         var wind = response.wind.speed;
         console.log(wind);
+        // separate uv index query using lat and lon from initial query
+        var lat = response.coord.lat;
+        console.log("lat: " + lat);
+        var lon = response.coord.lon;
+        console.log("lon: " + lon);
+        var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=242726fc7e61ebfc759b17352fed0b73&lat=" + lat + "&lon=" + lon
+        $.ajax({
+            query: uvURL,
+            method: "GET"
+        }).then(function(uvi) {
+            console.log(uvi);
+        })
+
         // append data to current-weather section
         $('#city-date').append(city + ", " + month + " " + date);
         $('#icon').append(weatherIcon);
@@ -54,13 +77,13 @@ $('#searchBtn').on('click', function(event) {
         $('#wind').append("Windspeed: " + wind + " mph");
     });
 
-    // $.ajax({
-    //     url: fiveDayQuery,
-    //     method: "GET"
-    // }).then(function(response) {
-    //     console.log(response);
-    //     var cityName = response.city.name;
-    //     console.log(cityName);
-    //     var icon = response.list
-    // })
+    $.ajax({
+        url: fiveDayQuery,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
+        var cityName = response.city.name;
+        console.log(cityName);
+        // var icon = response.list[].weather[].icon
+    })
 });
