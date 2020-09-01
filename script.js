@@ -1,28 +1,73 @@
 // api key 242726fc7e61ebfc759b17352fed0b73
+
 var searchHistory = [];
+var search;
+var index;
+// weather data
+var city;
+var month;
+var date;
+var weatherIcon = $('<img>')
+var tempF;
+var tempC;
+var humidity;
+var wind;
+// initialize
+init();
 
+function init() {
+    var storedSearch = JSON.parse(localStorage.getItem("searchHistory"));
+    if(storedSearch) {
+        searchHistory = storedSearch;
+        search = searchHistory[0];
+        ajaxQuery();
+    } else {
+    // storeEvents();
+    renderEvents();
+    }
+};
 
-    // initialize
+function renderEvents() {
+    for (var i = 0; i < searchHistory.length; i++) {
+        index = searchHistory[i];
+        
+        $('.search-history').append(index);
+    }
+}
 
-    // set item to local storage
+function storeEvents() {
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+}
 
-    // render buttons from local storage
 
 // on click for search
 $('#searchBtn').on('click', function(event) {
     event.preventDefault();
+    if ($('#search').val() === "") {
+        alert("enter valid city")
+    } else {
+        search = $('#search').val();
+        searchHistory.push(search);
+        ajaxQuery();
+    }
+});
+
+function ajaxQuery() {
+    var lat;
+    var lon;
     
-    var search = $('#search').val();
-    
+    console.log(searchHistory);
+    storeEvents();
+    renderEvents();
     
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + search + "&appid=242726fc7e61ebfc759b17352fed0b73"
     var fiveDayQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + search + "&appid=242726fc7e61ebfc759b17352fed0b73"
-    console.log(search);
-    console.log(queryURL);
-
-
     
-    // ajax query
+    // var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=242726fc7e61ebfc759b17352fed0b73&lat=" + lat + "&lon=" + lon
+    // console.log(search);
+    // console.log(queryURL);
+
+     // ajax query
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -30,53 +75,42 @@ $('#searchBtn').on('click', function(event) {
         searchHistory.push(search);
         console.log(response);
         // city name
-        var city = response.name;
+        city = response.name;
         console.log(city);
         // current date
         var a = new Date(response.dt * 1000);
         var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        var month = months[a.getMonth()];
+        month = months[a.getMonth()];
         console.log(month);
-        var date = a.getDate();
+        date = a.getDate();
         console.log(date);
         // current weather icon
         var icon = response.weather[0].icon
         console.log(icon); 
-        var weatherIcon = $('<img>')
+        // var weatherIcon = $('<img>')
         weatherIcon.attr('src', "http://openweathermap.org/img/wn/" + icon + "@2x.png")
         // temp F
-        var tempF = Math.round((response.main.temp - 273.15) * 9/5 + 32);
+        tempF = Math.round((response.main.temp - 273.15) * 9/5 + 32);
         console.log(tempF);
         // temp C
-        var tempC = Math.round(response.main.temp -273.15);
+        tempC = Math.round(response.main.temp -273.15);
         console.log(tempC);
         // humidity
-        var humidity = response.main.humidity;
+        humidity = response.main.humidity;
         console.log(humidity);
         // wind speed
-        var wind = response.wind.speed;
+        wind = response.wind.speed;
         console.log(wind);
         // separate uv index query using lat and lon from initial query
-        var lat = response.coord.lat;
+        lat = response.coord.lat;
         console.log("lat: " + lat);
-        var lon = response.coord.lon;
+        lon = response.coord.lon;
         console.log("lon: " + lon);
-        var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=242726fc7e61ebfc759b17352fed0b73&lat=" + lat + "&lon=" + lon
-        $.ajax({
-            query: uvURL,
-            method: "GET"
-        }).then(function(uvi) {
-            console.log(uvi);
-        })
 
-        // append data to current-weather section
-        $('#city-date').append(city + ", " + month + " " + date);
-        $('#icon').append(weatherIcon);
-        $('#temp').append("Temperature: " + tempF + "°F");
-        $('#humidity').append("Humidity: " + humidity + "%");
-        $('#wind').append("Windspeed: " + wind + " mph");
+        append();
+        
     });
-
+    
     $.ajax({
         url: fiveDayQuery,
         method: "GET"
@@ -86,4 +120,20 @@ $('#searchBtn').on('click', function(event) {
         console.log(cityName);
         // var icon = response.list[].weather[].icon
     })
-});
+    // $.ajax({
+    //     query: uvURL,
+    //     method: "GET"
+    // }).then(function(uvi) {
+    //     console.log(uvi);
+    // })
+};
+    
+    // append data to current-weather section
+    function append() {
+    
+    $('#city-date').append(city + ", " + month + " " + date);
+    $('#icon').append(weatherIcon);
+    $('#temp').append("Temperature: " + tempF + "°F");
+    $('#humidity').append("Humidity: " + humidity + "%");
+    $('#wind').append("Windspeed: " + wind + " mph");
+    };
