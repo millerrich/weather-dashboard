@@ -28,9 +28,11 @@ function init() {
 };
 
 function renderEvents() {
+    
+    $('.search-history').empty();
+
     for (var i = 0; i < searchHistory.length; i++) {
         index = searchHistory[i];
-        
         $('.search-history').append(index);
     }
 }
