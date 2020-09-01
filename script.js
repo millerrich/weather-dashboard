@@ -72,7 +72,6 @@ function ajaxQuery() {
         url: queryURL,
         method: "GET"
     }).then(function(response) {
-        searchHistory.push(search);
         console.log(response);
         // city name
         city = response.name;
