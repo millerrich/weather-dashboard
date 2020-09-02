@@ -17,6 +17,9 @@ var lon;
 var uv;
 var uvURL;
 var oneCallURL;
+// five day
+var art = document.getElementById(1);
+var weather5 = $('<img>')
 // initialize
 init();
 
@@ -38,7 +41,13 @@ function renderEvents() {
     
     for (var i = 0; i < searchHistory.length; i++) {
         index = searchHistory[i];
-        $('.search-history').append(index);
+        var btn = $('<button>');
+        btn.attr("class", "btn btn-outline-secondary historyBtn")
+        btn.attr("type", "button")
+        btn.attr("value", index)
+        btn.text(index)
+        $('.search-history').append(btn);
+        
     }
 }
 
@@ -58,6 +67,15 @@ $('#searchBtn').on('click', function(event) {
         ajaxQuery();
     }
 });
+
+// localstorage buttons
+$('#historyBtn').on('click', function(event) {
+    event.preventDefault();
+    console.log("click");
+    search = btn.val();
+    console.log(search);
+    ajaxQuery();
+})
 
 function ajaxQuery() {
     
@@ -120,10 +138,32 @@ function ajaxQuery() {
         url: fiveDayQuery,
         method: "GET"
     }).then(function(response) {
-        console.log(response);
-        var cityName = response.city.name;
-        console.log(cityName);
-        // var icon = response.list[].weather[].icon
+        console.log(response)
+        
+        for (var i = 0; i < response.list.length; i++) 
+        if (response.list[i].dt_txt.indexOf("15:00:00")!==-1) {
+            
+            
+            var container = $('#article-container');
+            var art5 = $('article');
+            
+            var date = response.list[i].dt_txt;
+            console.log(date);
+            art5.append(date);
+            var get = response.list[i];
+            var icon5 = get.weather[0].icon;
+            weather5.attr('src', "http://openweathermap.org/img/wn/" + icon5 + "@2x.png")
+            console.log(icon5);
+            art5.append(weather5);
+            var tempF5 = Math.round((get.main.temp - 273.15) * 9/5 + 32);
+            console.log("Temperature: " + tempF5);
+            art5.append("Temperature: " + tempF5);
+            var humidity5 = get.main.humidity;
+            console.log("Humidity: " + humidity5);
+            art5.append("Humidity: " + humidity);
+        } 
+
+                // container.append(art5);
     })
 };
 function uvQuery() {
