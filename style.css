@@ -21,14 +21,13 @@ section {
     justify-content: space-around;
 }
 
-.article-container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    
-}
-
 article {
     padding: 20px;
     background-color: crimson;
+}
+
+.fiveDiv {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
 }
