@@ -85,8 +85,6 @@ function ajaxQuery() {
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + search + "&appid=242726fc7e61ebfc759b17352fed0b73"
     var fiveDayQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + search + "&appid=242726fc7e61ebfc759b17352fed0b73"
 
-    // console.log(search);
-    // console.log(queryURL);
 
     // ajax query
     $.ajax({
@@ -101,12 +99,9 @@ function ajaxQuery() {
         var a = new Date(response.dt * 1000);
         var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         month = months[a.getMonth()];
-        console.log(month);
         date = a.getDate();
-        console.log(date);
         // current weather icon
         var icon = response.weather[0].icon
-        console.log(icon);
         // var weatherIcon = $('<img>')
         weatherIcon.attr('src', "http://openweathermap.org/img/wn/" + icon + "@2x.png")
         // temp F
@@ -146,21 +141,16 @@ function ajaxQuery() {
                 var $art = $('<article>');
                 var weather5 = $('<img>')
                 
-                console.log($art);
-
                 var date = moment(response.list[i].dt_txt).format("ddd, MMM D, YYYY");
-                console.log(date);
 
                 var get = response.list[i];
                 var icon5 = get.weather[0].icon;
                 weather5.attr('src', "http://openweathermap.org/img/wn/" + icon5 + "@2x.png")
-                console.log(icon5);
 
                 var tempF5 = Math.round((get.main.temp - 273.15) * 9 / 5 + 32);
                 console.log("Temperature: " + tempF5);
 
                 var humidity5 = get.main.humidity;
-                console.log("Humidity: " + humidity5);
 
                 $art.append("<p>Date:  " + date + "</p>");
                 $art.append("<p>Temperature: " + tempF5 + "</p>");

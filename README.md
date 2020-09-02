@@ -27,4 +27,4 @@ Type the name of the city you would like to find the weather for in the search b
 ## Deployed Link
 https://millerrich.github.io/weather-dashboard/
 
-![](images/weather-dash.png)
+![](images/weather-dash-newsmall.png)
