@@ -69,13 +69,13 @@ $('#searchBtn').on('click', function(event) {
 });
 
 // localstorage buttons
-$('#historyBtn').on('click', function(event) {
+$('.historyBtn').on('click', function(event) {
     event.preventDefault();
     console.log("click");
-    search = btn.val();
+    search = $(this).val();
     console.log(search);
     ajaxQuery();
-})
+});
 
 function ajaxQuery() {
     
@@ -144,33 +144,33 @@ function ajaxQuery() {
         if (response.list[i].dt_txt.indexOf("15:00:00")!==-1) {
             
             
-            var container = $('#article-container');
-            var art = $('article');
+            var $container = $('#article-container');
+            var $art = $('article');
             // container.empty()
 
             
             var date = response.list[i].dt_txt;
             console.log(date);
-            // art5.push(date);
+            
             var get = response.list[i];
             var icon5 = get.weather[0].icon;
             weather5.attr('src', "http://openweathermap.org/img/wn/" + icon5 + "@2x.png")
             console.log(icon5);
-            // art5.push(weather5);
+            
             var tempF5 = Math.round((get.main.temp - 273.15) * 9/5 + 32);
             console.log("Temperature: " + tempF5);
-            // art5.push("Temperature: " + tempF5);
+            
             var humidity5 = get.main.humidity;
             console.log("Humidity: " + humidity5);
-            // art5.push("Humidity: " + humidity);
-            art.append("<br>" + "Date: " + date + "<br>" + "Temperature: " + tempF5 + "<br>" + "Humidity: " + humidity5 + "<br>");
-            art.append(weather5);
             
-            container.append(art);
+            $art.append("<br>" + "Date: " + date + "<br>" + "Temperature: " + tempF5 + "<br>" + "Humidity: " + humidity5 + "<br>");
+            $art.append(weather5);
+            
+            $container.append(art);
+
+            
             
         } 
-
-                // container.append(art5);
     })
 };
 function uvQuery() {
