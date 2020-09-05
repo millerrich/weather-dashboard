@@ -6,24 +6,40 @@ header {
 
 .col-4 {
     background-color: cornflowerblue;
+    border-right: double lemonchiffon 10px;
+    border-top: lemonchiffon double 15px;
     padding: 10px;
 }
 
 .col-8 {
     background-color: lemonchiffon;
+    border-left: ridge cornflowerblue 10px;
+    border-top: chocolate ridge 10px;
+}
+
+@keyframes current {
+    from {background-color: lightblue;}
+    to {background-color: lightcoral;}
 }
 
 section {
-    margin: 5px;
-    background-color: indianred;
+    margin-top: 15px;
+    background-color: lightcoral;
+    border: crimson double 5px;
+    border-radius: 10px;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    animation-name: current;
+    animation-duration: 5s;
 }
 
 article {
     padding: 20px;
+    margin: 10px;
     background-color: crimson;
+    border: lightcoral double 3px;
+    border-radius: 10px;
 }
 
 .fiveDiv {
