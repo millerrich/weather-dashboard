@@ -170,7 +170,7 @@ function ajaxQuery() {
 function uvQuery() {
     console.log(uvURL);
     $.ajax({
-        query: uvURL,
+        url: uvURL,
         method: "GET"
     }).then(function (uvi) {
         console.log(uvi.value);
