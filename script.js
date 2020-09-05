@@ -174,6 +174,7 @@ function uvQuery() {
         method: "GET"
     }).then(function (uvi) {
         console.log(uvi.value);
+        console.log(uvi);
         uv = uvi.value;
     }).catch(function (err) {
         console.log(err);
@@ -185,6 +186,33 @@ function uvQuery() {
 // append data to current-weather section
 function append() {
     $('#city-date, #icon, #temp, #humidity, #wind, #uv').empty();
+    
+        if (uv < 2) {
+            $('#uv').css({
+                'background-color': 'green',
+                'border': 'black dashed 2px',
+                'border-radius': '10px'
+            });
+        } else if (uv < 5) {
+            $('#uv').css({
+                'background-color': 'yellow',
+                'border': 'black dashed 2px',
+                'border-radius': '10px'
+            });
+        } else if (uv < 7) {
+            $('#uv').css({
+                'background-color': 'orange',
+                'border': 'black dashed 2px',
+                'border-radius': '10px'
+            });
+        } else {
+            $('#uv').css({
+                'background-color': 'red',
+                'border': 'black dashed 2px',
+                'border-radius': '10px'
+            });
+        }
+    
 
     $('#city-date').append(city + ", " + month + " " + date);
     $('#icon').append(weatherIcon);
